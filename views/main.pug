@@ -1,0 +1,66 @@
+extends layout 
+
+block content 
+    .timeline 
+        if user 
+            div 
+                form#twit-form(action="/post" method="post" enctype="multipart/form-data")
+                    .input-group 
+                        textarea#twit(name="content" maxlength=140)
+                    .img-preview 
+                        img#img-preview(src="" style="display: none;" width="250" alt="미리보기")
+                        input#img-url(type="hidden" name="url")
+                    div 
+                        label#img-label(for="img") 이미지 업로드
+                        input#img(type="file" accept="image/*")
+                        button#twit-btn.btn(type="submit") 짹짹
+        .twits 
+            form#hashtag-form(action="/post/hashtag")
+                input(type="text" name="hashtag" placeholder="태그 검색")
+                button.btn 검색
+            for twit in twits 
+                input.twit-user-id(type="hidden" value="twit.user.id")
+                input.twit-id(type="hidden" value="twit.id")
+                .twit-author= twit.user.nick 
+                -const follow= user && user.Followings.map(f => f.id).includes(twit.user.id);
+                if user && user.id !== twit.user.id && !follow
+                    button.twit-follow 팔로우하기
+                .twit-content= twit.content 
+                if twit.img 
+                    .twit-img 
+                        img(src=twit.img alt="썸네일")
+    script. 
+        if (document.getElementById('img')) {
+            document.getElementById('img').addEventListener('change', function (e) {
+                let formData = new FormDate();
+                formData.append('img', this.files[0]);
+                axios.post('/post/img', formData)
+                    .then((res) => {
+                        document.getElementById('img-url').value = res.data.url;
+                        document.getElementById('img-preview').src = res.data.url;
+                        document.getElementById('img-preview').style = 'inline';
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    });
+            });
+        }
+        document.querySelectorAll('.twit-follow').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                const myId = document.querySelector('#my-id');
+                if (myId) {
+                    const userId = tag.parentNode.querySelector('#twit-user-id').value;
+                    if (myId.value !== userId) {
+                        if (confirm('팔로우 하시겠습니까?')) {
+                            axios.post(`/user/${userId}/follow`)
+                                .then(() => {
+                                    location.reload();
+                                })
+                                .catch((err) => {
+                                    console.error(err);
+                                })
+                        }
+                    }
+                }
+            });
+        });

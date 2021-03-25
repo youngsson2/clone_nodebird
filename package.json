@@ -1,0 +1,37 @@
+{
+  "name": "nodebird",
+  "version": "1.0.0",
+  "description": "sns service made with nodejs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/youngsson2/clone_nodebird.git"
+  },
+  "author": "youngsunchoi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/youngsson2/clone_nodebird/issues"
+  },
+  "homepage": "https://github.com/youngsson2/clone_nodebird#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.1",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "mysql2": "^2.2.5",
+    "passport": "^0.4.1",
+    "passport-kakao": "^1.0.1",
+    "passport-local": "^1.0.0",
+    "pug": "^3.0.2",
+    "sequelize": "^6.6.2"
+  }
+}
