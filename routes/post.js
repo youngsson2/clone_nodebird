@@ -65,5 +65,4 @@ router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {    // u
     }
 });
 
-
 module.exports = router;

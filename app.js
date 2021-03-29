@@ -12,6 +12,7 @@ const dotenv = require('dotenv');
 const pageRouter = require('./routes/page');
 const postRouter = require('./routes/post');
 const authRouter = require('./routes/auth');
+const userRouter = require('./routes/user');
 const { sequelize } = require('./models');
 const passportConfig = require('./passport');
 
@@ -46,6 +47,7 @@ app.use(flash());
 app.use('/', pageRouter);
 app.use('/post', postRouter);
 app.use('/auth', authRouter);
+app.use('/user', userRouter);
 
 app.use((req, res, next) => {
     const err = new Error('404 not found');

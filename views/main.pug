@@ -15,15 +15,15 @@ block content
                         input#img(type="file" accept="image/*")
                         button#twit-btn.btn(type="submit") 짹짹
         .twits 
-            form#hashtag-form(action="/post/hashtag")
+            form#hashtag-form(action="/hashtag")
                 input(type="text" name="hashtag" placeholder="태그 검색")
                 button.btn 검색
             for twit in twits 
-                input.twit-user-id(type="hidden" value="twit.user.id")
-                input.twit-id(type="hidden" value="twit.id")
-                .twit-author= twit.user.nick 
-                -const follow= user && user.Followings.map(f => f.id).includes(twit.user.id);
-                if user && user.id !== twit.user.id && !follow
+                input.twit-user-id(type="hidden" value=twit.User.id)
+                input.twit-id(type="hidden" value=twit.id)
+                .twit-author= twit.User.nick 
+                -const follow= user && user.Followings.map(f => f.id).includes(twit.User.id);
+                if user && user.id !== twit.User.id && !follow
                     button.twit-follow 팔로우하기
                 .twit-content= twit.content 
                 if twit.img 
@@ -32,7 +32,8 @@ block content
     script. 
         if (document.getElementById('img')) {
             document.getElementById('img').addEventListener('change', function (e) {
-                let formData = new FormDate();
+                let formData = new FormData();
+                console.log(this, this.files);
                 formData.append('img', this.files[0]);
                 axios.post('/post/img', formData)
                     .then((res) => {
@@ -49,7 +50,7 @@ block content
             btn.addEventListener('click', (e) => {
                 const myId = document.querySelector('#my-id');
                 if (myId) {
-                    const userId = tag.parentNode.querySelector('#twit-user-id').value;
+                    const userId = btn.parentNode.querySelector('.twit-user-id').value;
                     if (myId.value !== userId) {
                         if (confirm('팔로우 하시겠습니까?')) {
                             axios.post(`/user/${userId}/follow`)

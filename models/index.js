@@ -7,7 +7,6 @@ const config = require('../config/config.json')[env];
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 const db = {};
 
-db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.User = require('./user');

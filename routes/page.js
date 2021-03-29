@@ -31,7 +31,8 @@ router.get('/', async (req, res, next) => {
             include: {
                 model: User,
                 attributes: ['id', 'nick']
-            }
+            },
+            order: [['createdAt', 'DESC']]
         });
         res.render('main', {
             title: 'main - nodebird',
